@@ -1,3 +1,8 @@
+--That dead sky open source by Kel
+--Do you have some good functions or codes?
+--Tell me discord ExMachina#5142
+
+
 
 ddd = "a21.07.10"
 pshare = ''
@@ -2373,7 +2378,7 @@ function domenu()
         
       end
       if m == 14 then
-        x=gg.choice({'Unlock Elder','Restore spirits','print offsets','Teleport Candles','Ghetto candles'
+        x=gg.choice({'Unlock Elder','Restore spirits','print offsets','Tele Candles','get candles'
         },nil,'⚠️This features are not stable')
         if x == 1 then
           d = {}
