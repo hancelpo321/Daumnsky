@@ -1,8 +1,3 @@
---That dead sky open source by Kel
---Do you have some good functions or codes?
---Tell me discord ExMachina#5142
-
-
 
 ddd = "a21.07.10"
 pshare = ''
