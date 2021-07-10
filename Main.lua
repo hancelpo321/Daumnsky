@@ -2373,7 +2373,7 @@ function domenu()
         
       end
       if m == 14 then
-        x=gg.choice({'Unlock Elder','Restore spirits','print offsets','Tele Candles','get candles'
+        x=gg.choice({'Unlock Elder','Restore spirits','print offsets','Teleport Candles','Ghetto candles'
         },nil,'⚠️This features are not stable')
         if x == 1 then
           d = {}
