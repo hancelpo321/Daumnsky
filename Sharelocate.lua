@@ -23,7 +23,7 @@ crlist = {
 {map='Dawn_TrialsEarth',x=-21.72,y=122.06,z=-41.72},
 {map='Dawn_TrialsEarth',x=-44.91,y=122.16,z=61.01},
 {map='Dawn_TrialsEarth',x=6.59,y=122.58,z=-3.72},
-{map='Dawn_TrialsEarth',x=-15.0,y=133.0,z=-2.0},
+{map='Dawn_TrialsEarth',x=-15.50,y=133.50,z=-2.50},
 {map='Dawn_TrialsAir',x=-7.69,y=105.01,z=-137.83},
 {map='Dawn_TrialsFire',x=-14.186095237731934,y=49.835777282714844,z=-250.09849548339844},
 {map='Prairie_ButterflyFields',x=125.69341278076,y=196.24737548828,z=-434.72247314453},
