@@ -23,7 +23,7 @@ crlist = {
 {map='Dawn_TrialsEarth',x=-21.72,y=122.06,z=-41.72},
 {map='Dawn_TrialsEarth',x=-44.91,y=122.16,z=61.01},
 {map='Dawn_TrialsEarth',x=6.59,y=122.58,z=-3.72},
-{map='Dawn_TrialsEarth',x=-13.85,y=133.79,z=3.30,
+{map='Dawn_TrialsEarth',x=-13.85,y=133.79,z=3.30},
 {map='Dawn_TrialsAir',x=-7.69,y=105.01,z=-137.83},
 {map='Dawn_TrialsFire',x=-14.186095237731934,y=49.835777282714844,z=-250.09849548339844},
 {map='Prairie_ButterflyFields',x=125.69341278076,y=196.24737548828,z=-434.72247314453},
@@ -446,3 +446,4 @@ crlist = {
 {map='Night2',x=-10.953668594360352,y=307.59967041015625,z=59.396671295166016},
 {map='Night2',x=-0.34176620841026306,y=309.8086853027344,z=72.05538940429688}
 }
+© 2021 GitHub, Inc.
