@@ -1,10 +1,4 @@
---That dead sky open source by Kel
---Do you have some good functions or codes?
---Tell me discord ExMachina#5142
-
-
-
-ddd = "a21.07.10"
+ddd = "a21.07.11"
 pshare = ''
 umenu = true
 fasthome = true
@@ -348,6 +342,8 @@ pid = {
        {351343999,'Rose'},
        {638976622,'Star lamp'},
        {-1723880395,'Fox'},
+       {-994414187,'Birthday flag'},
+       {1638144370,'Ocarina'},
        {2035109393,"Nothing"}
 }
 
@@ -1369,7 +1365,38 @@ function espam()
 end
 
 function mtrigger()
-  
+  if crset.enable then
+    if mev == 1 then
+    if getadd(pbase + poffsets.pshout,gg.TYPE_FLOAT) < 0.6 then
+      if crset.level >= #crarray then
+      crset.level = #crarray - 1
+    end
+    crset.level = crset.level + 1
+    setposit(crarray[crset.level].x,crarray[crset.level].y,crarray[crset.level].z)
+      setadd(pbase + poffsets.pshout,gg.TYPE_FLOAT,2.0,false)
+    end
+  end
+  if mev == 2 then
+    if getadd(pbase + poffsets.pose,gg.TYPE_DWORD) == 2 then
+      if crset.level >= #crarray then
+      crset.level = #crarray - 1
+    end
+    crset.level = crset.level + 1
+    setposit(crarray[crset.level].x,crarray[crset.level].y,crarray[crset.level].z)
+      setadd(pbase + poffsets.pose,gg.TYPE_DWORD,0,false)
+    end
+  end
+  if mev == 3 then
+    if getadd(pbase + poffsets.pose,gg.TYPE_DWORD) == 1 then
+      if crset.level >= #crarray then
+      crset.level = #crarray - 1
+    end
+    crset.level = crset.level + 1
+    setposit(crarray[crset.level].x,crarray[crset.level].y,crarray[crset.level].z)
+      setadd(pbase + poffsets.pose,gg.TYPE_DWORD,0,false)
+    end
+  end
+    else
   if mev == 1 then
     if getadd(pbase + poffsets.pshout,gg.TYPE_FLOAT) < 0.6 then
       pmove(mdis)
@@ -1387,6 +1414,7 @@ function mtrigger()
       pmove(mdis)
       setadd(pbase + poffsets.pose,gg.TYPE_DWORD,0,false)
     end
+  end
   end
 end
 
@@ -1523,6 +1551,27 @@ function candlefarm(aa,bb)
   setadd(pbase + poffsets.pose,gg.TYPE_DWORD,0,false)
   gg.removeListItems(candles)
   gg.removeListItems(flowers)
+end
+
+function dumpdata()
+  xstr = ''
+  gg.clearResults()
+  gg.setRanges(4)
+  gg.searchNumber('h 00 00 80 3F 00 00 80 3F 00 00 80 3F 00 00 80 3F AF 52 E3 CD')
+  gg.refineNumber(-81)
+  if gg.getResultsCount() == 0 then
+   gg.toast('fail!')
+   return;
+  end
+ xcv = gg.getResults(1)[1].address
+ for i = 0, 512 do
+   xbv = xcv + (0x6C0 * i)
+   if getadd(xbv,gg.TYPE_DWORD) == 0 then 
+     break;
+   end
+   xstr = xstr .. 'name : ' .. addtostr(xbv + 0x5B,24) .. '\ntype : ' .. addtostr(xbv + 0x329,24) .. '\nvalue : ' .. getadd(xbv,gg.TYPE_DWORD) .. '\n'
+ end
+ gg.copyText(xstr)
 end
 
 function searchgl()
@@ -1693,7 +1742,6 @@ gg.showUiButton()
 function domenu()
       m=gg.choice({'🎈Wings'
       	,'🕯Collect Candles'
-      	,'🚮Collect objects'
       	,'⬆️Breach wall'
       	,'🌏World'
       	,'☸Engine settings'
@@ -1702,7 +1750,7 @@ function domenu()
       	,'🎭Emotes'
       	,'🏧Set props'
         ,'🔄Auto run'
-        ,'📽Camera'
+        ,'📽camera'
         ,'♥️Modify friendly nodes'
         ,'⚠️Testing features'
       },nil,'')
@@ -1774,12 +1822,9 @@ function domenu()
         absorb()
       end
       if m == 3 then 
-        absflower()
-      end
-      if m == 4 then 
         pmove(mdis)
       end
-      if m == 5 then 
+      if m == 4 then 
         x=gg.choice({
         '➡️Teleport'
       	,'⏩Change map'
@@ -1882,7 +1927,7 @@ function domenu()
         end
         
       end
-      if m == 6 then
+      if m == 5 then
         
          x=gg.choice({
            'Wing fast Recharge',
@@ -2005,7 +2050,7 @@ function domenu()
         
       end
         
-      if m == 7 then
+      if m == 6 then
          x=gg.choice({
            '🤜Beat gesture'
            ,'😵Spam magics'
@@ -2104,7 +2149,7 @@ function domenu()
         gg.setVisible(false)
       end
       
-      if m == 8 then
+      if m == 7 then
         y={}
         for i, v in ipairs(mid) do
           table.insert(y,mid[i][1])
@@ -2117,7 +2162,7 @@ function domenu()
           pmagic(t,mid[x][2])
          end
       end
-      if m == 9 then
+      if m == 8 then
         x=gg.choice({
            'Upgrade all emotes'
            ,'Copy all emotes info'
@@ -2143,7 +2188,7 @@ function domenu()
        end
        
       end
-      if m == 10 then
+      if m == 9 then
          y={}
         for i, v in ipairs(pid) do
           table.insert(y,pid[i][2])
@@ -2157,7 +2202,7 @@ function domenu()
             gg.setVisible(false)
          end
       end
-      if m == 11 then 
+      if m == 10 then 
         x=gg.choice({
            'Auto wing farm'
            ,'⚠️Auto candle farm⚠️'
@@ -2254,7 +2299,7 @@ function domenu()
         end
         
       end
-      if m == 12 then
+      if m == 11 then
         if hcamera() then
           y=gg.choice({
            'Lock yaw'
@@ -2352,7 +2397,7 @@ function domenu()
         end
         
       end
-      if m == 13 then
+      if m == 12 then
         getfriendnode()
         y={}
         for i, v in ipairs(nodes) do
@@ -2377,8 +2422,8 @@ function domenu()
           gg.setVisible(false)
         
       end
-      if m == 14 then
-        x=gg.choice({'Unlock Elder','Restore spirits','print offsets','Tele Candles','get candles'
+      if m == 13 then
+        x=gg.choice({'Unlock Elder','Restore spirits','print offsets','Tele Candles','dump items'
         },nil,'⚠️This features are not stable')
         if x == 1 then
           d = {}
@@ -2408,21 +2453,7 @@ function domenu()
           crmenu()
         end
         if x == 5 then
-          gg.setVisible(false)
-          ae1 = getadd(pbase + poffsets.positX,gg.TYPE_FLOAT)
-          ae2 = getadd(pbase + poffsets.positY,gg.TYPE_FLOAT)
-          ae3 = getadd(pbase + poffsets.positZ,gg.TYPE_FLOAT)
-          viscandle(true)
-          for i = 0, 128 do
-            if getadd(eoffsets.nentity + poffsets.vcandles + (0x70 * i) - 0x4,gg.TYPE_DWORD) ~= 0 then
-      
-        setadd(eoffsets.nentity + poffsets.vcandles + (0x70 * i) - 0x30,gg.TYPE_FLOAT,ae1,false)
-        setadd(eoffsets.nentity + poffsets.vcandles + (0x70 * i) - 0x30 + 0x4,gg.TYPE_FLOAT,ae2,false)
-        setadd(eoffsets.nentity + poffsets.vcandles + (0x70 * i) - 0x30 + 0x8,gg.TYPE_FLOAT,ae3,false)
-    else
-      break;
-    end
-          end
+          dumpdata()
         end
       end
         --absflower()
@@ -2468,7 +2499,7 @@ function crmenu()
   end
   
   
-  jy=gg.choice({'➡️Next candle','⬅️Previous Candle','🔒Lock player candle','❌Exit'},nil,'candle : ' .. crset.level .. '/' .. #crarray)
+  jy=gg.choice({'➡️Next Point','⬅️Previous Point','🔒Lock player candle','⬆️Breach Wall','Hotkey','❌Exit'},nil,'candle : ' .. crset.level .. '/' .. #crarray)
   if jy == 1 then
     gg.setVisible(false)
     if crset.level >= #crarray then
@@ -2495,6 +2526,25 @@ function crmenu()
     end
   end
   if jy == 4 then
+    pmove(mdis)
+  end
+  if jy == 5 then
+    k=gg.choice({
+        'Disable'
+      	,'Honk'
+      	,'Sit'
+      	,'Sit 2'
+      	},nil,'')
+    if k == 1 then mev = 0 end
+    if k == 2 then
+      mev = 1 
+      setadd(pbase + poffsets.pshout,gg.TYPE_FLOAT,2.0,false)
+    end
+    if k == 3 then mev = 2 end
+    if k == 4 then mev = 3 end
+  end
+  if jy == 6 then
+    mev = 0
     gg.setVisible(false)
     crset.enable = false
     domenu()
