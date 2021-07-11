@@ -1702,7 +1702,7 @@ function domenu()
       	,'🎭Emotes'
       	,'🏧Set props'
         ,'🔄Auto run'
-        ,'📽camera'
+        ,'📽Camera'
         ,'♥️Modify friendly nodes'
         ,'⚠️Testing features'
       },nil,'')
