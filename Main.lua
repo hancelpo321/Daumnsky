@@ -1,4 +1,10 @@
-ddd = "a21.07.11"
+--That dead sky open source by Kel
+--Do you have some good functions or codes?
+--Tell me discord ExMachina#5142
+
+
+
+ddd = "a21.07.12"
 pshare = ''
 umenu = true
 fasthome = true
@@ -15,7 +21,7 @@ maxemote = ''
 --less 0.5 max 2.0
 
 crsleep = 1500
-wrsleep = 800
+wrsleep = 1000
 
 pbase = 0x00
 prange = {a = 0,b = -1}
@@ -47,9 +53,12 @@ poffsets = {
   eused = 0x2B434,
   vcandles = 0x501904,
   gchat = 0x93C9B4,
-  ucandle = 0x595120
+  ucandle = 0x595120,
+  fullmagic = 0x27B58,
+  mymagic = 0x23A08
   }
 
+allmagics = {}
 sarray = {}
 candles = {}
 flowers = {}
@@ -156,6 +165,7 @@ mid = {
  {'🆕Pants Sword',3799734077},
  {'🆕Scarf Cape',2207305370},
  {'🆕Asteroid Jacket',1402240423},
+ {'cake',3994256484},
  {'none',0}
 };
 windwallset = {
@@ -169,7 +179,7 @@ windwallset = {
 
     {"RainMid", 4829954002675894547},
     {"RainEnd", 4817725702471155712},
-    {"Rain_BaseCamp", 4843677694493622950},
+    {"Rain_BaseCamp  ", 4843677694493622950},
     {"Sunset", -4560560199779603680},
     {"Sunset_Citadel", 4902590410129506426},
     {"SunsetEnd", 4792210659019202290},
@@ -571,7 +581,7 @@ function addtostr(add,amount)
 end
 
 function getpatch()
-  API = gg.makeRequest('https://raw.githubusercontent.com/hancelpo321/Daumnsky/main/Sharelocate.lua').content
+  API = gg.makeRequest('https://raw.githubusercontent.com/Kelrit402/TGC_Sky_is_dead/main/Sharelocate.lua').content
   if not API then
     gg.toast('patch failed')
   else
@@ -1455,9 +1465,9 @@ function wingfarm(aa,bb)
     portal(cworld[i][2])
     gg.sleep(wrsleep)
     for w = 0,10 do
-      if nyn == getmap() then
+      gg.sleep(wrsleep)
+      if nyn ~= getmap() then
         gg.sleep(wrsleep)
-      else
         break;
       end
     end
@@ -1551,6 +1561,85 @@ function candlefarm(aa,bb)
   setadd(pbase + poffsets.pose,gg.TYPE_DWORD,0,false)
   gg.removeListItems(candles)
   gg.removeListItems(flowers)
+end
+
+function getmagics()
+  gg.toast('Scanning...')
+  xcv = pbase - poffsets.fullmagic
+  for i = 0, 512 do
+   xbv = xcv + (0x80 * i)
+   if getadd(xbv + 0x8,gg.TYPE_DWORD) == 0  and getadd(xbv,gg.TYPE_DWORD) == 0 then
+     
+     break;
+   end
+   xse1 = addtostr(xbv - 0x17,20)
+   xse2 = getadd(xbv-0x20,gg.TYPE_DWORD)
+   xse3 = getadd(xbv,gg.TYPE_DWORD)
+   if #xse1 < 1 then
+     xse1 = addtostr(xbv + 0x13,20)
+   end
+   table.insert(allmagics,{xse1,xse2,xse3})
+  end
+end
+
+function modmagic(ty)
+  if ty == 1 then
+    gg.setVisible(false)
+    for i = 0, 99 do
+      if getadd(pbase - poffsets.mymagic + (0x18 * i),gg.TYPE_DWORD) == 0 and getadd(pbase - poffsets.mymagic + (0x18 * i) + 0x10,gg.TYPE_DWORD) < 1 then
+      break
+      end
+      setadd(pbase - poffsets.mymagic + (0x18 * i) + 0x10,gg.TYPE_DWORD,999,true)
+    end
+    gg.toast('done')
+    return;
+  end
+  
+  if ty == 2 then
+  mine = {}
+  madd = {}
+  aname = {}
+  if #allmagics == 0 then
+    getmagics()
+  end
+  
+  for i = 0, 99 do
+    xco = getadd(pbase - poffsets.mymagic + (0x18 * i),gg.TYPE_DWORD)
+    xcu = pbase - poffsets.mymagic + (0x18 * i)
+    if xco == 0 and getadd(xcu + 0x10,gg.TYPE_DWORD) < 1 then
+      break
+    end
+    
+    for k,v in ipairs(allmagics) do
+      if v[2] == xco then
+        table.insert(mine,v[1])
+        table.insert(madd,xcu)
+      end
+    end
+  end
+  for k,v in ipairs(allmagics) do
+    table.insert(aname,v[1])
+  end
+  
+  mxb = gg.choice(mine,nil,'select your magic')
+  if mxb == nil then return; end
+  mxc = gg.choice(aname,nil,'select what do you want')
+  if mxc == nil then return; end
+  setadd(madd[mxb],gg.TYPE_DWORD,allmagics[mxc][2],false)
+  end
+end
+
+function dumpmagic()
+  if allmagics == {} then
+    getmagics()
+  end
+  
+xstr = ''
+ xcv = pbase - poffsets.fullmagic
+ for k,v in ipairs(allmagics) do
+   xstr = xstr .. 'name : ' .. v[1] .. '\nvalue : ' .. v[2] .. '\nvalue2 : ' .. v[3] .. '\n'
+ end
+ gg.copyText(xstr)
 end
 
 function dumpdata()
@@ -2154,12 +2243,19 @@ function domenu()
         for i, v in ipairs(mid) do
           table.insert(y,mid[i][1])
         end
+        table.insert(y,'Manual')
          x=gg.choice(y,nil,'select spell')
          t=gg.choice(mslot,nil,'select slot')
          if (x ~= nil and t ~= nil) then
           gg.setVisible(false)
-          mslot[t] = mid[x][1]
-          pmagic(t,mid[x][2])
+          if x == #y then
+            jas = inputnum(0)
+            mslot[t] = jas
+            pmagic(t,jas)
+          else
+            mslot[t] = mid[x][1]
+            pmagic(t,mid[x][2])
+          end
          end
       end
       if m == 8 then
@@ -2423,7 +2519,7 @@ function domenu()
         
       end
       if m == 13 then
-        x=gg.choice({'Unlock Elder','Restore spirits','print offsets','Tele Candles','dump items'
+        x=gg.choice({'Unlock Elder','Restore spirits','print offsets','dump items','dump magics','Unlimited spell','Replace spell'
         },nil,'⚠️This features are not stable')
         if x == 1 then
           d = {}
@@ -2448,12 +2544,16 @@ function domenu()
           debg()
         end
         if x == 4 then
-          gg.setVisible(false)
-          crset.enable = true
-          crmenu()
+          dumpdata()
         end
         if x == 5 then
-          dumpdata()
+          dumpmagic()
+        end
+        if x == 6 then
+          modmagic(1)
+        end
+        if x == 7 then
+          modmagic(2)
         end
       end
         --absflower()
